@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🚀 Tugas Next JS 1 - Setup Next.js, Husky, dan Routing Dasar
 
-## Getting Started
+### 🎯 Tujuan Tugas
+- Memahami Rendering pada Next.js  
+- Memahami perbedaan Next.js dengan React murni (SPA Only)  
+- Memahami Struktur Project Next.js  
+- Dapat melakukan Setup Dasar Next.js  
+- Dapat Membuat Routing Dasar pada Next.js  
 
-First, run the development server:
+---
+
+### 🧩 Langkah Pengerjaan
+
+#### A. Setup Next.js
+Project dibuat menggunakan perintah berikut:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bunx create-next-app@latest .
+```
+Pilihan yang digunakan:
+
+- TypeScript: Yes
+
+- Linter (ESLint): Yes
+
+- Tailwind CSS: Yes
+
+- src/ directory: Yes
+
+- App Router: Yes (recommended)
+
+- Turbopack: Yes (recommended)
+
+- Alias @/*: Default
+<br>
+
+#### B. Setup Husky (lint-staged & commitlint)
+
+- Tambahkan dependency berikut:
+
+```bash
+bun add -D husky lint-staged @commitlint/config-conventional @commitlint/cli
+bunx husky init
+```
+- Kemudian buat hook di dalam folder ``.husky``:
+
+```bash
+pre-commit
+
+pre-commit.ps1
+
+commit-msg
+
+commit-msg.ps1
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Isi file sesuai konfigurasi standar yang sudah diajarkan (lint-staged + commitlint).
+<br>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### C. Setup Shadcn/UI
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Mengikuti dokumentasi resmi Shadcn untuk Next.js:
+Shadcn UI Docs
 
-## Learn More
+Langkah utama:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+bunx shadcn-ui@latest init
+```
+<br>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### D. Membuat Routing Dasar
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tambahkan halaman baru Dashboard:
 
-## Deploy on Vercel
+__📂 Struktur folder:__
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+src/
+ └── app/
+      ├── page.tsx         → Halaman utama (Home)
+      └── dashboard/
+           └── page.tsx    → Halaman Dashboard
+      └── login/
+           └── page.tsx    → Halaman Login
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+Isi contoh ``src/app/dashboard/page.tsx``:
+
+```js
+const Dashboard = () => {
+  return <div>Dashboard</div>;
+};
+export default Dashboard;
+```
+Isi contoh ``src/app/login/page.tsx``:
+
+```js
+const LoginPage = () => {
+  return <div>LoginPage</div>;
+};
+export default LoginPage;
+```
+<br>
+
+### 📖 Dokumentasi
+🔹 Fitur yang Dibuat
+
+- Setup Next.js dengan Bun
+
+- Konfigurasi Husky + Commitlint untuk menjaga kualitas commit
+
+- Integrasi Shadcn/UI untuk styling komponen UI
+
+- Routing Dasar dengan menambahkan halaman /dashboard
+<br>
+
+### ⚡ Cara Menjalankan Project
+```bash
+bun install
+bun dev
+```
+<br>
+
+### 📷 Screenshot
+- Tampilan halaman dashboard
+![Dashboard Page](./docs/images/dashboard.png)
+<br>
+- Tampilan halaman login
+![Login Page](./docs/images/login-page.png)
