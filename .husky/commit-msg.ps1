@@ -1,0 +1,10 @@
+param([string]$commitMsgFile)
+
+Write-Host "Commit message validation..."
+bun commit --edit $commitMsgFile
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Commit mesage invalid. Please fix."
+    exit 1
+}
+
+Write-Host "Commit message valid according to Coventional Commit"
