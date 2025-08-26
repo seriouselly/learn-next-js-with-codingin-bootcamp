@@ -1,9 +1,10 @@
 param([string]$commitMsgFile)
 
 Write-Host "Commit message validation..."
-bun commit --edit $commitMsgFile
+bun commitlint --edit $commitMsgFile
+
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Commit mesage invalid. Please fix."
+    Write-Host "Commit message invalid. Please fix."
     exit 1
 }
 
