@@ -119,6 +119,8 @@ export default LoginPage;
 bun install
 bun dev
 ```
+Buka di browser:
+👉 http://localhost:3000
 <br>
 
 ### 📷 Screenshot
@@ -127,3 +129,8 @@ bun dev
 <br>
 - Tampilan halaman login
 ![Login Page](./docs/images/login-page.png)
+
+### 📝 Catatan
+Next.js mendukung __Server-side Rendering (SSR)__ dan __Static Site Generation (SSG)__, sehingga berbeda dengan React murni yang hanya mendukung __Client-side Rendering (CSR)__.
+
+Struktur project menggunakan App Router sehingga lebih modern dan modular.
