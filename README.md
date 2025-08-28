@@ -1,136 +1,132 @@
-## 🚀 Tugas Next JS 1 - Setup Next.js, Husky, dan Routing Dasar
+## 🚀 Tugas 2 - Next.js
 
 ### 🎯 Tujuan Tugas
-- Memahami Rendering pada Next.js  
-- Memahami perbedaan Next.js dengan React murni (SPA Only)  
-- Memahami Struktur Project Next.js  
-- Dapat melakukan Setup Dasar Next.js  
-- Dapat Membuat Routing Dasar pada Next.js  
+- Memahami **Routing** pada Next.js  
+- Memahami kegunaan **Metadata** dan implementasinya pada Next.js  
+- Memahami penggunaan **Navigation** pada Next.js  
+- Membuat **Middleware** sebagai proteksi route  
 
 ---
 
 ### 🧩 Langkah Pengerjaan
 
-#### A. Setup Next.js
-Project dibuat menggunakan perintah berikut:
-
-```bash
-bunx create-next-app@latest .
-```
-Pilihan yang digunakan:
-
-- TypeScript: Yes
-
-- Linter (ESLint): Yes
-
-- Tailwind CSS: Yes
-
-- src/ directory: Yes
-
-- App Router: Yes (recommended)
-
-- Turbopack: Yes (recommended)
-
-- Alias @/*: Default
-<br>
-
-#### B. Setup Husky (lint-staged & commitlint)
-
-- Tambahkan dependency berikut:
-
-```bash
-bun add -D husky lint-staged @commitlint/config-conventional @commitlint/cli
-bunx husky init
-```
-- Kemudian buat hook di dalam folder ``.husky``:
-
-```bash
-pre-commit
-
-pre-commit.ps1
-
-commit-msg
-
-commit-msg.ps1
-```
-
-- Isi file sesuai konfigurasi standar yang sudah diajarkan (lint-staged + commitlint).
-<br>
-
-#### C. Setup Shadcn/UI
-
-Mengikuti dokumentasi resmi Shadcn untuk Next.js:
-Shadcn UI Docs
-
-Langkah utama:
-
-```bash
-bunx shadcn-ui@latest init
-```
-<br>
-
-#### D. Membuat Routing Dasar
-
-Tambahkan halaman baru Dashboard:
-
-__📂 Struktur folder:__
-
+#### 1. Routing di Next.js
+- Membuat folder dan file di dalam `app/` untuk otomatis jadi route.  
 src/
- └── app/
-      ├── page.tsx         → Halaman utama (Home)
-      └── dashboard/
-           └── page.tsx    → Halaman Dashboard
-      └── login/
-           └── page.tsx    → Halaman Login
+└── app/
+    ├── (auth)/
+    │   ├── login/
+    │   │   ├── _component/
+    │   │   └── page.tsx
+    │   └── register/
+    │       └── page.tsx
+    │
+    ├── dashboard/
+    │   └── @main/
+    │       ├── layout.tsx
+    │       └── page.tsx
+    │
+    ├── feed/
+    │   └── (.)post/
+    │       └── page.tsx
+    │
+    ├── user/
+    │   └── [[...slug]]/
+    │       └── page.tsx
+    │
+    ├── page.tsx
+    └── middleware.ts
 
+Keterangan singkat:
 
-Isi contoh ``src/app/dashboard/page.tsx``:
+- (auth) → folder grouping route khusus (bisa login & register).
 
-```js
-const Dashboard = () => {
-  return <div>Dashboard</div>;
+- @main → folder parallel route buat dashboard.
+
+- (.)post → route intercepting di dalam feed.
+
+- [[...slug]] → catch-all optional route buat user.
+
+Akses via browser:  
+``"/" → Home``
+``"/login" → Login``
+``"/dashboard" → Dashboard``
+<br>
+
+#### 2. Metadata
+- Tambahkan metadata di tiap halaman menggunakan ``export const metadata``.  
+- Contoh:
+```tsx
+export const metadata = {
+  title: "Dashboard",
+  description: "Ini adalah halaman Dashboard",
 };
-export default Dashboard;
-```
-Isi contoh ``src/app/login/page.tsx``:
-
-```js
-const LoginPage = () => {
-  return <div>LoginPage</div>;
-};
-export default LoginPage;
 ```
 <br>
 
-### 📖 Dokumentasi
-🔹 Fitur yang Dibuat
+#### 3. Navigation
 
-- Setup Next.js dengan Bun
+- Gunakan komponen ``Link`` dari ``next/link`` untuk navigasi antar halaman.
 
-- Konfigurasi Husky + Commitlint untuk menjaga kualitas commit
+- Contoh:
 
-- Integrasi Shadcn/UI untuk styling komponen UI
+```tsx
+import Link from "next/link";
 
-- Routing Dasar dengan menambahkan halaman /dashboard
+export default function Navbar() {
+  return (
+    <nav>
+      <Link href="/">Home</Link>
+      <Link href="/about">Login</Link>
+      <Link href="/dashboard">Dashboard</Link>
+    </nav>
+  );
+};
+```
 <br>
 
-### ⚡ Cara Menjalankan Project
+#### 4. Middleware (Proteksi Route)
+
+- Buat file ``middleware.ts`` di root project.
+
+- Contoh: hanya user login yang bisa akses ``/dashboard``.
+
+```tsx
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export function middleware(request: NextRequest) {
+  const isLoggedIn = false; // ganti sesuai logic auth
+
+  if (!isLoggedIn && request.nextUrl.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/dashboard/:path*"],
+};
+```
+<br>
+
+#### 📌 Catatan
+
+Jalankan project dengan:
 ```bash
-bun install
 bun dev
 ```
-Buka di browser:
-👉 http://localhost:3000
 <br>
 
-### 📷 Screenshot
-- Tampilan halaman dashboard
-![Dashboard Page](./docs/images/dashboard.png)
+#### 📷 Screenshot
+- Halaman Home
+![Halaman Home](./docs/images/home-page.png)
 <br>
-- Tampilan halaman login
-![Login Page](./docs/images/login-page.png)
 
-### 📝 Catatan
-Next.js mendukung __Server-side Rendering (SSR)__ dan __Static Site Generation (SSG)__, sehingga berbeda dengan React murni yang hanya mendukung __Client-side Rendering (CSR)__.
+- Halaman Login
+![Halaman Login](./docs/images/login-page.png)
+<br>
 
-Struktur project menggunakan App Router sehingga lebih modern dan modular.
+- Halaman Dashboard
+![Halaman Dashboard](./docs/images/dashboard.png)
