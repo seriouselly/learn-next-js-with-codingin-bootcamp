@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { StarwarsCharacters } from "@/interfaces/starwars.interface";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { charactersQueryKey, fetchCharacters } from "@/configs";
+import { charactersQueryKey, fetchCharacters } from "@/services";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
