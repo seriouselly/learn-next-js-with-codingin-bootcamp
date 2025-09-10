@@ -73,7 +73,8 @@ Sebelum mulai, **buat branch baru** terlebih dahulu.
 ### B. Authentication & Authorization (Backend NestJS Local)
 1. **Clone backend Nest.JS**
   ```bash
-    git clone https://github.com/Salmansha08/nest-auth-jwt-starting .bun install
+    git clone https://github.com/Salmansha08/nest-auth-jwt-starting .
+    bun install
     bun run start:dev
   ```
   Atau gunakan project yang sudah pernah di-clone, jangan lupa pull update:
