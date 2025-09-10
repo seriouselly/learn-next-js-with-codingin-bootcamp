@@ -1,129 +1,157 @@
-## 🚀 Tugas Next JS 1 - Setup Next.js, Husky, dan Routing Dasar
+# 🚀 Tugas 3 Next.js
 
-### 🎯 Tujuan Tugas
-- Memahami Rendering pada Next.js  
-- Memahami perbedaan Next.js dengan React murni (SPA Only)  
-- Memahami Struktur Project Next.js  
-- Dapat melakukan Setup Dasar Next.js  
-- Dapat Membuat Routing Dasar pada Next.js  
+## 🎯 Tujuan Tugas
+
+- Memahami metode **fetching data** pada Next.js (Server Component & Client Component).
+- Memahami perbedaan fetching data menggunakan **fetch** dan **axios**.
+- Memahami implementasi **caching**.
+- Memahami alur **Authentication** dan **Authorization** di Next.js.
+- Dapat menggunakan **Axios, Tanstack Form, dan Tanstack Query**.
+- Memahami penggunaan **Mutation** pada Tanstack Query.
 
 ---
 
-### 🧩 Langkah Pengerjaan
+## 🧩 Langkah Pengerjaan
 
-#### A. Setup Next.js
-Project dibuat menggunakan perintah berikut:
-
-```bash
-bunx create-next-app@latest .
-```
-Pilihan yang digunakan:
-
-- TypeScript: Yes
-
-- Linter (ESLint): Yes
-
-- Tailwind CSS: Yes
-
-- src/ directory: Yes
-
-- App Router: Yes (recommended)
-
-- Turbopack: Yes (recommended)
-
-- Alias @/*: Default
+**‼️ PENTING**
+Sebelum mulai, **buat branch baru** terlebih dahulu.
 <br>
 
-#### B. Setup Husky (lint-staged & commitlint)
+### A. Fetching pada Next.js (API Public Starwars)
 
-- Tambahkan dependency berikut:
-
-```bash
-bun add -D husky lint-staged @commitlint/config-conventional @commitlint/cli
-bunx husky init
-```
-- Kemudian buat hook di dalam folder ``.husky``:
-
-```bash
-pre-commit
-
-pre-commit.ps1
-
-commit-msg
-
-commit-msg.ps1
-```
-
-- Isi file sesuai konfigurasi standar yang sudah diajarkan (lint-staged + commitlint).
+1. **Install dependensi**
+   ```bash
+   bun install @tanstack/react-query @tanstack/react-form zod zustand js-cookie swr axios
+   bunx --bun shadcn@latest init
+   ```
+2. **Menambahkan komponen dari [Shadcn](https://ui.shadcn.com/docs/installation/next)**
+    ```bash
+    bunx --bun shadcn@latest add button alert card checkbox input select sonner table
+    ```
+3. **Buat file .env**
+    NEXT_PUBLIC_STARWARS_API=https://starwars-databank-server.vercel.app/api/v1
+    NEXT_PUBLIC_AUTH_API=http://localhost:3210/api
 <br>
 
-#### C. Setup Shadcn/UI
-
-Mengikuti dokumentasi resmi Shadcn untuk Next.js:
-Shadcn UI Docs
-
-Langkah utama:
-
-```bash
-bunx shadcn-ui@latest init
-```
+4. **Struktur Folder**
+    ```pgsql
+    └── 📁app
+    └── 📁(auth)
+        └── 📁login
+            └── 📁_components
+                ├── LoginForm.tsx
+            ├── page.tsx
+        └── 📁register
+            ├── page.tsx
+    └── 📁starwars
+        └── 📁axios
+            ├── page.tsx
+        └── 📁fetch
+            └── 📁client
+                ├── page.tsx
+            └── 📁server
+                ├── page.tsx
+        └── 📁query
+            ├── page.tsx
+        └── 📁swr
+            ├── page.tsx
+    ├── favicon.ico
+    ├── globals.css
+    ├── layout.tsx
+    └── page.tsx
+    ```
+5. **Halaman yang dibuat**
+    ```bash
+    - app/starwars/fetch/server/page.tsx → Fetching Server Component
+    - app/starwars/fetch/client/page.tsx → Fetching Client Component
+    - app/starwars/axios/page.tsx → Fetching Server Component dengan Axios
+    - app/starwars/swr/page.tsx → Fetching Client Component dengan Axios + SWR
+    - app/starwars/query/page.tsx → Fetching Client Component dengan Axios + Tanstack Query
+    ```
 <br>
 
-#### D. Membuat Routing Dasar
+### B. Authentication & Authorization (Backend NestJS Local)
+1. **Clone backend Nest.JS**
+  ```bash
+    git clone https://github.com/Salmansha08/nest-auth-jwt-starting .bun install
+    bun run start:dev
+  ```
+  Atau gunakan project yang sudah pernah di-clone, jangan lupa pull update:
+  ```bash
+  git pull origin master
+  ```
+2. **Form Login**
+  - Input: email, password, rememberMe.
 
-Tambahkan halaman baru Dashboard:
+  - Endpoint: POST ``/api/auth/login``.
+  <br>
 
-__📂 Struktur folder:__
+3. **Token**
+  - Simpan token di Zustand store.
+  - Gunakan js-cookie untuk cookie handling.
+  <br>
+  
+4. **Authenticated Route**
+  - Buat halaman /dashboard.
+  - Proteksi route agar hanya bisa diakses jika user login.
+  <br>
 
-src/
- └── app/
-      ├── page.tsx         → Halaman utama (Home)
-      └── dashboard/
-           └── page.tsx    → Halaman Dashboard
-      └── login/
-           └── page.tsx    → Halaman Login
+5. **[Optional] Role-based Access**
+  - /dashboard hanya bisa diakses oleh role admin dan superadmin.
+  <br>
+---
 
+## ⚡ Cara Menjalankan
+1. **Clone repository ini**
+  ```bash
+  git clone <url-repo>
+  ```
 
-Isi contoh ``src/app/dashboard/page.tsx``:
+2. **Install dependencies**
+  ```bash
+  bun install
+  ```
 
-```js
-const Dashboard = () => {
-  return <div>Dashboard</div>;
-};
-export default Dashboard;
-```
-Isi contoh ``src/app/login/page.tsx``:
+3. **Jalankan development server**
+  ```bash
+  bun run dev -- -p 3001
+  ```
+  <br>
 
-```js
-const LoginPage = () => {
-  return <div>LoginPage</div>;
-};
-export default LoginPage;
-```
+4. **Buka di browser: http://localhost:3000**
+---
+
+## 📖 Dokumentasi
+### ✨ Fitur yang Dibuat
+
+- Tampilan Login Page
+![Login Page](/docs/images/login.png)
 <br>
 
-### 📖 Dokumentasi
-🔹 Fitur yang Dibuat
-
-- Setup Next.js dengan Bun
-
-- Konfigurasi Husky + Commitlint untuk menjaga kualitas commit
-
-- Integrasi Shadcn/UI untuk styling komponen UI
-
-- Routing Dasar dengan menambahkan halaman /dashboard
+- Tampilan Dashboard Page
+![Login Dashboard](/docs/images/dashboard.png)
 <br>
 
-### ⚡ Cara Menjalankan Project
-```bash
-bun install
-bun dev
-```
+- Tampilan Fetch Client
+![Login Fetch Client](/docs/images/fetch-client.png)
 <br>
 
-### 📷 Screenshot
-- Tampilan halaman dashboard
-![Dashboard Page](./docs/images/dashboard.png)
+- Tampilan Fetch Server
+![Login Fetch Server](/docs/images/fetch-server.png)
 <br>
-- Tampilan halaman login
-![Login Page](./docs/images/login-page.png)
+
+- Tampilan Axios Client
+![Login Axios Client](/docs/images/axios-client.png)
+<br>
+
+- Tampilan Axios Server
+![Login Axios Server](/docs/images/axios-server.png)
+<br>
+
+- Tampilan Query
+![Login Query](/docs/images/query.png)
+<br>
+
+- Tampilan SWR
+![Login SWR](/docs/images/swr.png)
+
