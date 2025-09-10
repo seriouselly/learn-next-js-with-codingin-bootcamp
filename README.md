@@ -45,7 +45,10 @@ Sebelum mulai, **buat branch baru** terlebih dahulu.
             ├── page.tsx
     └── 📁starwars
         └── 📁axios
-            ├── page.tsx
+            └── 📁client
+                ├── page.tsx
+            └── 📁server
+                ├── page.tsx
         └── 📁fetch
             └── 📁client
                 ├── page.tsx
