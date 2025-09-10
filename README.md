@@ -114,7 +114,7 @@ Sebelum mulai, **buat branch baru** terlebih dahulu.
 
 3. **Jalankan development server**
   ```bash
-  bun run dev -- -p 3001
+  bun run dev
   ```
   <br>
 
